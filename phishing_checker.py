@@ -1,4 +1,5 @@
 from urllib.parse import urlparse
+import streamlit as st
 
 def check_url(url):
     score = 0
@@ -57,3 +58,4 @@ def check_url(url):
         status = "Dangerous"
 
     return score, status, issues
+st.session_state.url_scans += 1

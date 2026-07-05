@@ -1,4 +1,5 @@
 import re
+import streamlit as st
 
 def check_password_strength(password):
     score = 0
@@ -43,3 +44,4 @@ def check_password_strength(password):
         strength = "Strong"
 
     return score, strength, suggestions
+st.session_state.password_checks += 1

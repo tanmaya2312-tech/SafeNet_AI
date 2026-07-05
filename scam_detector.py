@@ -1,3 +1,4 @@
+import streamlit as st
 def analyze_message(message):
 
     score = 100
@@ -50,3 +51,8 @@ def analyze_message(message):
         level = "High Risk"
 
     return score, level, reasons
+high_risk_words = ["otp", "password", "bank", "urgent", "login", "verify account"]
+medium_risk_words = ["click", "update", "confirm", "account", "limited"]
+low_risk_words = ["offer", "prize", "win"]
+st.sidebar.radio("Navigate", ["Dashboard", "Scam Detector", "URL Scanner", "Password Checker"])
+st.session_state.scam_checks += 1
