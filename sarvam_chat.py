@@ -3,17 +3,16 @@ from dotenv import load_dotenv
 from sarvamai import SarvamAI
 
 # Load .env file
+import streamlit as st
+import os
+from dotenv import load_dotenv
+
 load_dotenv()
 
-# Get API key
-api_key = os.getenv("SARVAM_API_KEY")
+api_key = st.secrets.get("SARVAM_API_KEY") or os.getenv("SARVAM_API_KEY")
 
 if not api_key:
-    raise ValueError("SARVAM_API_KEY not found in .env file")
-
-client = SarvamAI(
-    api_subscription_key=api_key
-)
+    raise ValueError("SARVAM_API_KEY not found")
 
 def ask_ai(question):
     system_prompt = """

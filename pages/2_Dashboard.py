@@ -175,7 +175,7 @@ div.stButton > button:hover{
 c1, c2, c3 = st.columns([1,2,1])
 
 with c2:
-    st.image("assets/data/logo.png", width=440)
+    st.image("assets/data/logo.png", width=720)
 
 st.markdown("<div class='title'>SafeNet AI Dashboard</div>", unsafe_allow_html=True)
 
