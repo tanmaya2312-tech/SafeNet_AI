@@ -32,3 +32,5 @@ Keep answers simple, practical, and beginner-friendly.
     )
 
     return response.choices[0].message.content
+st.write("API Key Loaded:", bool(api_key))
+st.write("Key Prefix:", api_key[:8] + "...")

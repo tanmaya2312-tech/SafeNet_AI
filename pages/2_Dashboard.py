@@ -267,10 +267,9 @@ with col1:
     """,unsafe_allow_html=True)
 
     if st.button("Open Password Checker"):
-
-        st.switch_page("pages/3_Password.py")
-
-    st.markdown("<br>",unsafe_allow_html=True)
+      if st.button("Open Password Checker", use_container_width=True):
+       st.switch_page("pages/3_Password.py")
+      st.markdown("<br>",unsafe_allow_html=True)
 
     st.markdown("""
     <div class="tool-card">

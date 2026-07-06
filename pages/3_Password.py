@@ -80,45 +80,6 @@ if analyze and password:
     "score": score
 })
 
-    # Generate PDF
-    pdf = generate_report(
-        "Password Analysis",
-        score,
-        strength,
-        suggestions
-    )
-
-    st.subheader("📊 Security Analysis")
-
-    st.metric("Security Score", f"{score}/100")
-
-    st.progress(score / 100)
-
-    if strength == "Strong":
-        st.success("🟢 STRONG PASSWORD")
-
-    elif strength == "Medium":
-        st.warning("🟡 MEDIUM PASSWORD")
-
-    else:
-        st.error("🔴 WEAK PASSWORD")
-
-    st.subheader("Recommendations")
-
-    if suggestions:
-        for item in suggestions:
-            st.write(f"⚠️ {item}")
-    else:
-        st.success("Excellent! Your password is very strong.")
-
-    st.download_button(
-        "📄 Download Password Report",
-        data=pdf,
-        file_name="Password_Report.pdf",
-        mime="application/pdf",
-        use_container_width=True
-    )
-
     st.subheader("🤖 AI Security Advisor")
 
     if strength == "Strong":
