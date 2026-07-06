@@ -4,4 +4,4 @@ pandas
 requests
 reportlab
 python-dotenv
-sarvamai
+sarvamai==0.1.28
