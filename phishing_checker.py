@@ -58,4 +58,3 @@ def check_url(url):
         status = "Dangerous"
 
     return score, status, issues
-st.session_state.url_scans += 1

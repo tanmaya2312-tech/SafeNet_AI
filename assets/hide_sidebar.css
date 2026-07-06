@@ -1,0 +1,13 @@
+/* Hide Streamlit sidebar */
+[data-testid="stSidebar"] {
+    display: none;
+}
+
+/* Remove left spacing */
+[data-testid="stAppViewContainer"] {
+    margin-left: 0;
+}
+
+[data-testid="stMain"] {
+    margin-left: 0;
+}

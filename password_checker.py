@@ -44,4 +44,3 @@ def check_password_strength(password):
         strength = "Strong"
 
     return score, strength, suggestions
-st.session_state.password_checks += 1

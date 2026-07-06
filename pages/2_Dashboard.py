@@ -1,10 +1,15 @@
 import streamlit as st
+from core.session import initialize_session
+import matplotlib.pyplot as plt
+
+initialize_session()
 
 st.set_page_config(
     page_title="SafeNet AI Dashboard",
     page_icon="🛡️",
     layout="wide"
 )
+
 
 # ---------------- SESSION STATE ----------------
 
@@ -13,7 +18,9 @@ defaults = {
     "url_scans": 0,
     "scam_checks": 0,
     "ai_queries": 0,
+    "activity_log": []
 }
+
 
 for key, value in defaults.items():
     if key not in st.session_state:
@@ -261,7 +268,7 @@ with col1:
 
     if st.button("Open Password Checker"):
 
-        st.switch_page("pages/password.py")
+        st.switch_page("pages/3_Password.py")
 
     st.markdown("<br>",unsafe_allow_html=True)
 
@@ -276,7 +283,7 @@ with col1:
 
     if st.button("Open Scam Detector"):
 
-        st.switch_page("pages/scam_detecator.py")   # change if you renamed the file
+        st.switch_page("pages/5_Scam_detector.py")   # change if you renamed the file
 
 with col2:
 
@@ -291,7 +298,7 @@ with col2:
 
     if st.button("Open URL Scanner"):
 
-        st.switch_page("pages/URL_scanner.py")
+        st.switch_page("pages/4_URL_scanner.py")
 
     st.markdown("<br>",unsafe_allow_html=True)
 
@@ -306,7 +313,12 @@ with col2:
 
     if st.button("Open AI Assistant"):
 
-        st.switch_page("pages/chatbot.py")
+        st.switch_page("pages/6_Chatbot.py")
+# ================================
+# THREAT STATISTICS
+# ================================
+
+
 # ================================
 # THREAT STATISTICS
 # ================================
@@ -315,14 +327,66 @@ st.divider()
 
 st.subheader("📈 Threat Statistics")
 
-chart_data = {
-    "Passwords": [1, 2, 3, 5, 7, 9],
-    "URLs": [0, 1, 2, 3, 4, 6],
-    "Scams": [0, 0, 1, 2, 2, 3],
-}
+import matplotlib.pyplot as plt
 
-st.line_chart(chart_data, use_container_width=True)
+# Collect only tools that have been used
+labels = []
+sizes = []
 
+if st.session_state.password_checks > 0:
+    labels.append("Password Checker")
+    sizes.append(st.session_state.password_checks)
+
+if st.session_state.url_scans > 0:
+    labels.append("URL Scanner")
+    sizes.append(st.session_state.url_scans)
+
+if st.session_state.scam_checks > 0:
+    labels.append("Scam Detector")
+    sizes.append(st.session_state.scam_checks)
+
+if st.session_state.ai_queries > 0:
+    labels.append("AI Assistant")
+    sizes.append(st.session_state.ai_queries)
+
+# If no analysis has been performed
+if not sizes:
+    st.info("No analyses performed yet.")
+else:
+
+    fig, ax = plt.subplots(figsize=(7, 5), facecolor="#050505")
+
+    ax.set_facecolor("#050505")
+
+    wedges, texts, autotexts = ax.pie(
+        sizes,
+        autopct="%1.0f%%",
+        startangle=90,
+        wedgeprops=dict(width=0.40),
+        pctdistance=0.75,
+        textprops=dict(color="white", fontsize=11)
+    )
+
+    ax.legend(
+        wedges,
+        labels,
+        title="Analysis Tools",
+        loc="center left",
+        bbox_to_anchor=(1, 0.5),
+        fontsize=11,
+        title_fontsize=12
+    )
+
+    ax.set_title(
+        "Analysis Distribution",
+        color="white",
+        fontsize=18,
+        pad=20
+    )
+
+    ax.axis("equal")
+
+    st.pyplot(fig, use_container_width=True)
 # ================================
 # SECURITY SCORE
 # ================================
@@ -352,32 +416,32 @@ st.markdown(
 )
 
 # ================================
-# RECENT ACTIVITY
+# ANALYSIS HISTORY
 # ================================
 
 st.divider()
 
-st.subheader("🕒 Recent Activity")
+st.subheader("🕒 Analysis History")
 
-activity = []
+if st.session_state.activity_log:
 
-if st.session_state.password_checks:
-    activity.append(f"🔐 Passwords Checked : {st.session_state.password_checks}")
+    for item in reversed(st.session_state.activity_log):
 
-if st.session_state.url_scans:
-    activity.append(f"🌐 URLs Scanned : {st.session_state.url_scans}")
+        if isinstance(item, dict):
 
-if st.session_state.scam_checks:
-    activity.append(f"⚠️ Scam Messages Analyzed : {st.session_state.scam_checks}")
+            with st.container(border=True):
 
-if st.session_state.ai_queries:
-    activity.append(f"🤖 AI Questions Asked : {st.session_state.ai_queries}")
+                st.markdown(f"### 🛠 {item['tool']}")
+                st.write(f"🕒 **Time:** {item['time']}")
+                st.write(f"📊 **Status:** {item['status']}")
+                st.write(f"⭐ **Score:** {item['score']}/100")
 
-if activity:
-    for item in activity:
-        st.success(item)
+        else:
+            st.info(item)
+
 else:
-    st.info("No activity yet. Start using SafeNet AI!")
+    st.info("No analyses performed yet.")
+
 
 # ================================
 # CYBER TIP
@@ -414,3 +478,4 @@ Built for HackHazards 2026 ❤️
 """,
 unsafe_allow_html=True,
 )
+

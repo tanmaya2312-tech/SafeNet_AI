@@ -1,4 +1,7 @@
 import streamlit as st
+from core.session import initialize_session
+
+initialize_session()
 
 st.set_page_config(
     page_title="SafeNet AI",
@@ -6,7 +9,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🛡️ SafeNet AI")
+st.switch_page("pages/1_home.py")
 st.subheader("AI Powered Cybersecurity Platform")
 
 st.write("""

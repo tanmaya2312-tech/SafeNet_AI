@@ -1,10 +1,7 @@
 import streamlit as st
 from pathlib import Path
 import base64
-st.sidebar.title("🛡 SafeNet AI")
-st.sidebar.markdown("AI Cybersecurity System")
 
-page = st.sidebar.radio("Navigate", ["Home", "Dashboard"])
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -15,6 +12,16 @@ def get_base64(path):
 logo = get_base64(BASE_DIR / "assets" / "data" / "logo.png")
 
 st.set_page_config(page_title="SafeNet AI", page_icon="🛡️", layout="wide")
+st.markdown(
+    """
+    <style>
+    img{
+        margin-bottom:-90px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # ---------- CSS ----------
 st.markdown("""
@@ -109,7 +116,7 @@ h1, h2, h3, p {
 # ---------- Logo ----------
 st.markdown(f"""
 <div style="text-align:center;">
-    <img src="data:image/png;base64,{logo}" width="520">
+    <img src="data:image/png;base64,{logo}" width="720">
 </div>
 """, unsafe_allow_html=True)
 # ---------- Hero ----------
@@ -155,8 +162,7 @@ col1,col2,col3=st.columns([8,5,8])
 
 with col2:
     if st.button("🚀 Launch Dashboard",use_container_width=True):
-        st.switch_page("pages/dashboard.py")
-
+        st.switch_page("pages/2_Dashboard.py")
 # ---------- Features ----------
 col1,col2,col3=st.columns(3)
 
